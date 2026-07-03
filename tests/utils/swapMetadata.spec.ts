@@ -37,12 +37,20 @@ const samplePayload: SwapMetadataPayload = {
     },
     lockupTx: "0xlockup",
     commitmentLockupTxHash: "0xcommitment",
+    originalDestination: "0xdestination",
     bridge: {
         sourceAsset: "USDC",
         destinationAsset: "USDC-BASE",
         kind: BridgeKind.Cctp,
         position: SwapPosition.Post,
     },
+};
+
+const legacyGoldenPayload: SwapMetadataPayload = {
+    dex: samplePayload.dex,
+    lockupTx: samplePayload.lockupTx,
+    commitmentLockupTxHash: samplePayload.commitmentLockupTxHash,
+    bridge: samplePayload.bridge,
 };
 
 // Payloads carrying a lockup transaction must be bound to their swap.
@@ -77,7 +85,7 @@ describe("swapMetadata crypto", () => {
     test("decrypts the golden vector (wire format is frozen)", async () => {
         await expect(
             decryptSwapMetadata(mnemonic, swapId, goldenVector),
-        ).resolves.toEqual(samplePayload);
+        ).resolves.toEqual(legacyGoldenPayload);
     });
 
     test("encodes the envelope as backend-compatible hex", async () => {
@@ -270,6 +278,7 @@ describe("patchEncryptedSwapMetadata", () => {
                 id: "swap-id",
                 lockupTx: "0xtx",
                 dex: samplePayload.dex,
+                originalDestination: samplePayload.originalDestination,
             } as never,
             rescueFile,
         );
@@ -282,6 +291,7 @@ describe("patchEncryptedSwapMetadata", () => {
         ).resolves.toEqual({
             lockupTx: "0xtx",
             dex: samplePayload.dex,
+            originalDestination: samplePayload.originalDestination,
         });
 
         // The blob must not decrypt for any other swap.

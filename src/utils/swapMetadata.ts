@@ -20,7 +20,7 @@ type SwapMetadataBridge = Pick<
 type SwapMetadataDex = Pick<DexDetail, "hops" | "position" | "quoteAmount">;
 type SwapMetadataTxIdentity = Pick<
     SwapBase,
-    "lockupTx" | "commitmentLockupTxHash"
+    "lockupTx" | "commitmentLockupTxHash" | "originalDestination"
 >;
 type SwapMetadataDexDetails = NonNullable<EncodedHop["dexDetails"]>;
 type SwapMetadataRoute = {
@@ -35,7 +35,11 @@ export type SwapMetadataSource = SwapMetadataTxIdentity & {
 export type SwapMetadataPayload = SwapMetadataTxIdentity & SwapMetadataRoute;
 export type SwapMetadataLocalFields = Pick<
     SwapMetadataPayload,
-    "dex" | "bridge" | "lockupTx" | "commitmentLockupTxHash"
+    | "dex"
+    | "bridge"
+    | "lockupTx"
+    | "commitmentLockupTxHash"
+    | "originalDestination"
 >;
 
 // The payload plus the id of the swap it belongs to, sealed in so that
@@ -167,6 +171,7 @@ const parseSwapMetadataPlaintext = parseObject<SwapMetadataPlaintext>({
     ),
     lockupTx: parseOptional(parseString),
     commitmentLockupTxHash: parseOptional(parseString),
+    originalDestination: parseOptional(parseString),
     swapId: parseOptional(parseString),
 });
 
@@ -298,6 +303,10 @@ export const buildSwapMetadataPayload = (
         payload.commitmentLockupTxHash = fields.commitmentLockupTxHash;
     }
 
+    if (fields.originalDestination !== undefined) {
+        payload.originalDestination = fields.originalDestination;
+    }
+
     return Object.keys(payload).length > 0 ? payload : undefined;
 };
 
@@ -309,6 +318,7 @@ export const buildSwapMetadataPayloadFromSwap = (
         commitmentLockupTxHash: swap.commitmentLockupTxHash,
         dex: swap.dex,
         lockupTx: swap.lockupTx,
+        originalDestination: swap.originalDestination,
     });
 
 export const patchEncryptedSwapMetadata = async (
@@ -367,6 +377,10 @@ export const swapMetadataToLocalFields = (
 
     if (payload.commitmentLockupTxHash !== undefined) {
         fields.commitmentLockupTxHash = payload.commitmentLockupTxHash;
+    }
+
+    if (payload.originalDestination !== undefined) {
+        fields.originalDestination = payload.originalDestination;
     }
 
     return fields;
