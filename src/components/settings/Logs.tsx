@@ -59,7 +59,7 @@ const Logs = () => {
 
     const download = async (evt: MouseEvent) => {
         evt.stopPropagation();
-        downloadJson("boltz-logs", await getLogs(), true);
+        downloadJson("coinos-swap-logs", await getLogs(), true);
     };
 
     return (

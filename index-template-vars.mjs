@@ -30,30 +30,22 @@ const modeLabels = Object.freeze({
 // Configuration for both regular and pro versions
 const config = {
     regular: {
-        boltzUrl: "https://boltz.exchange",
-        boltzTitle: "Boltz | Non-Custodial Bitcoin Bridge",
+        boltzUrl: "https://swap.coinos.io",
+        boltzTitle: "Coinos Swap | Non-Custodial Bitcoin Bridge",
         boltzDescription:
-            "Swap between different Bitcoin layers and stablecoins while staying in full control. Fast and non-custodial Bitcoin / Lightning / Liquid / Rootstock / TBTC / WBTC / USDT / USDC swaps.",
-        boltzColor100: "#FFE96D",
-        boltzColor200: "#E1C218",
+            "Swap between different Bitcoin layers while staying in full control. Fast and non-custodial Bitcoin / Lightning / Liquid swaps.",
+        boltzColor100: "#FFFFFF",
+        boltzColor200: "#FFFFFF",
         backgroundColor: "#142840",
         assetsPath: "",
         ldJson: {
             "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Boltz Exchange",
-            url: "https://boltz.exchange",
-            logo: "https://boltz.exchange/boltz.svg",
-            sameAs: ["https://x.com/boltzhq"],
-            hasPart: {
-                "@context": "https://schema.org",
-                "@type": "WebApplication",
-                name: "Boltz Pro | Stack Sats Non-Custodially",
-                url: "https://pro.boltz.exchange",
-                logo: "https://pro.boltz.exchange/boltz-pro-preview.jpg",
-                description:
-                    "Earn sats for swapping Bitcoin in directions that help balance our liquidity. Fast and non-custodial Lightning / Bitcoin / Liquid / Rootstock swaps.",
-            },
+            "@type": "WebApplication",
+            name: "Coinos Swap",
+            url: "https://swap.coinos.io",
+            logo: "https://swap.coinos.io/coinos-icon.svg",
+            description:
+                "Swap between different Bitcoin layers while staying in full control. Fast and non-custodial Bitcoin / Lightning / Liquid swaps.",
         },
     },
     pro: {

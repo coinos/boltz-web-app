@@ -953,16 +953,6 @@ const Create = () => {
                     <hr class="spacer" />
                 </Show>
                 <CreateButton />
-                <Show when={embeddedMode()}>
-                    <div class="embedded-branding">
-                        <a
-                            href="https://boltz.exchange"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            Powered by Boltz
-                        </a>
-                    </div>
-                </Show>
                 <AssetSelect />
                 <NetworkSelect />
                 <SettingsMenu />

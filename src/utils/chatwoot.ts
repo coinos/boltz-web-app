@@ -20,7 +20,7 @@ const getCookie = (name: string) => {
         : decodeURIComponent(cookie.substring(prefix.length));
 };
 
-export const logsFileName = "boltz-logs.json";
+export const logsFileName = "coinos-swap-logs.json";
 
 export const formatLogsForChatwootAttachment = (
     logs: Record<string, string[]>,

@@ -88,7 +88,7 @@ export const WalletConnect = () => {
                     walletAdapters: [
                         new TronLinkAdapter({
                             dappIcon: appIcon,
-                            dappName: "Boltz",
+                            dappName: "Coinos Swap",
                         }),
                         new MetaMaskAdapter(),
                     ],
@@ -96,8 +96,8 @@ export const WalletConnect = () => {
             ],
             networks: nets,
             metadata: {
-                name: "Boltz",
-                description: "Boltz Web App",
+                name: "Coinos Swap",
+                description: "Coinos Swap Web App",
                 url: location,
                 icons: [appIcon],
             },

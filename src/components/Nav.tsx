@@ -44,7 +44,7 @@ const Nav = (props: { network: string; isPro?: boolean }) => {
                         id="logo-mask"
                         boltz-theme={props.isPro ? "pro" : "default"}
                         role="img"
-                        aria-label="Boltz logo"
+                        aria-label="Coinos Swap logo"
                     />
                 </A>
                 <Show when={props.network !== "mainnet"}>
@@ -99,9 +99,6 @@ const Nav = (props: { network: string; isPro?: boolean }) => {
                     </A>
                     <A href="/history" onClick={() => setHamburger(false)}>
                         {t("history")}
-                    </A>
-                    <A href="/products" onClick={() => setHamburger(false)}>
-                        {t("products")}
                     </A>
                     <Show when={config.supportUrl}>
                         <ExternalLink class="external" href={config.supportUrl}>

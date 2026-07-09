@@ -1,23 +1,40 @@
-# Boltz Web App
+# Coinos Swap Web App
 
-This is the source of the official Boltz Web App served at
-[boltz.exchange](https://boltz.exchange/). It enables **non-custodial** swaps
-between different Bitcoin layers.
+This is the source of the web app served at
+[swap.coinos.io](https://swap.coinos.io/). It enables **non-custodial** swaps
+between different Bitcoin layers (Lightning / Bitcoin / Liquid).
 
-## Documentation
+It is a fork of the excellent
+[BoltzExchange/boltz-web-app](https://github.com/BoltzExchange/boltz-web-app),
+rebranded for the independent swap service operated by
+[coinos](https://coinos.io). It is **not** operated by or affiliated with Team
+Boltz — please do not contact Boltz for support with swaps made on
+swap.coinos.io.
 
-We encourage our technical users to check the code and run the web app locally
-from source following
-[these instructions](https://docs.boltz.exchange/v/web-app/) in our docs.
+## Changes from upstream
 
-## Resources
+- Rebranded as Coinos Swap (logos, PWA manifests, social metadata, i18n copy)
+- API endpoint pointed at the swap.coinos.io backend
+- Removed Boltz product pages, support/social links, Chatwoot widget, and
+  legal documents
+- Trimmed the landing page (removed node stats, integrations and partner
+  sections)
 
-- Get Help: [Support Center](https://support.boltz.exchange/hc/center/)
-- Read the Docs: [Docs Home](https://docs.boltz.exchange/)
-- Read our Blog: [Substack](https://blog.boltz.exchange/)
-- Follow us: [X/Twitter](https://twitter.com/Boltzhq) |
-  [Nostr](https://primal.net/p/nprofile1qqsqcdcltmv4qanpx3p7svcufdsg9rkk00x7l2sknra4e6whkv59l7clgcdzj)
-- Open a Lightning channel with us:
-  [CLN](https://amboss.space/node/02d96eadea3d780104449aca5c93461ce67c1564e2e1d73225fa67dd3b997a6018)
-  |
-  [LND](https://amboss.space/node/026165850492521f4ac8abd9bd8088123446d126f648ca35e60f88177dc149ceb2)&#x20;
+The backend serving swap.coinos.io is an **unmodified**
+[BoltzExchange/boltz-backend](https://github.com/BoltzExchange/boltz-backend)
+(official Docker image).
+
+## Building
+
+```
+bun install
+bun run mainnet                              # select src/configs/mainnet.ts
+bun run index-template-vars.mjs --regular    # generate index.html
+bun run build
+```
+
+The build output lands in `dist/`.
+
+## License
+
+[AGPL-3.0](LICENSE), same as upstream.

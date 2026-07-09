@@ -17,7 +17,6 @@ import { Show } from "solid-js";
 import { render } from "solid-js/web";
 
 import { configureBoltzSwaps } from "./boltzSwapsConfig";
-import Chatwoot from "./chatwoot";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import Notification from "./components/Notification";
@@ -39,16 +38,10 @@ import Hero from "./pages/Hero";
 import History from "./pages/History";
 import NotFound from "./pages/NotFound";
 import Pay from "./pages/Pay";
-import Privacy from "./pages/Privacy";
 import RefundRescue from "./pages/RefundRescue";
 import Rescue from "./pages/Rescue";
 import RescueEvm from "./pages/RescueEvm";
-import Terms from "./pages/Terms";
 import RescueExternal from "./pages/external-rescue/RescueExternal";
-import Btcpay from "./pages/products/Btcpay";
-import Client from "./pages/products/Client";
-import Pro from "./pages/products/Pro";
-import Products from "./pages/products/Products";
 import "./style/index.scss";
 import "./utils/patches";
 
@@ -113,7 +106,6 @@ const App = (props: RouteSectionProps) => {
                             <RescueProvider>
                                 <SwapChecker />
                                 <SwapExecutionWorker />
-                                <Chatwoot />
                                 <Show when={!isEmbedded}>
                                     <Nav
                                         isPro={config.isPro}
@@ -173,10 +165,6 @@ const cleanup = render(
         <Router root={App}>
             <Route path="/" component={Hero} />
             <Route path="/swap" component={Create} />
-            <Route path="/products" component={Products} />
-            <Route path="/products/btcpay" component={Btcpay} />
-            <Route path="/products/client" component={Client} />
-            <Route path="/products/pro" component={Pro} />
             {/* Compatibility with link in Breez:
                                 https://github.com/breez/breezmobile/blob/a1b0ffff902dfa2210af8fdb047b715535ff11e9/src/json/vendors.json#L30 */}
             <Route path="/swapbox" component={Create} />
@@ -202,8 +190,6 @@ const cleanup = render(
             <Route path="/rescue/refund/:id" component={RefundRescue} />
             {redirectRefundToRescue()}
             <Route path="/history" component={History} />
-            <Route path="/terms" component={Terms} />
-            <Route path="/privacy" component={Privacy} />
             <Route path="*404" component={NotFound} />
         </Router>
     ),

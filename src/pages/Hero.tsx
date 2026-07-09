@@ -1,65 +1,17 @@
 import { useNavigate } from "@solidjs/router";
-import { BigNumber } from "bignumber.js";
-import { getNodeStats } from "boltz-swaps/client";
-import log from "loglevel";
-import { Show, createSignal, onMount } from "solid-js";
+import { Show } from "solid-js";
 
 import bitcoin from "../assets/bitcoin-icon.svg";
 import lightning from "../assets/lightning-icon.svg";
 import liquid from "../assets/liquid-icon.svg";
-import rbtc from "../assets/rbtc-icon.svg";
-import tbtc from "../assets/tbtc-icon.svg";
-import usdc from "../assets/usdc.svg";
-import usdt from "../assets/usdt-icon.svg";
-import wbtc from "../assets/wbtc-icon.svg";
-import ExternalLink from "../components/ExternalLink";
-import { config } from "../config";
-import { BTC } from "../consts/Assets";
-import { Denomination } from "../consts/Enums";
 import { useGlobalContext } from "../context/Global";
 import Create from "../pages/Create";
 import "../style/hero.scss";
-import {
-    formatAmountDenomination,
-    formatDenomination,
-} from "../utils/denomination";
-import FeeComparison from "./FeeComparison";
 
 export const Hero = () => {
     const navigate = useNavigate();
 
-    const [numChannel, setNumChannel] = createSignal(0);
-    const [numPeers, setNumPeers] = createSignal(0);
-    const [capacity, setCapacity] = createSignal(0);
-    const [oldestChannel, setOldestChannel] = createSignal("0");
-
-    const { hideHero, setHideHero, t, denomination, separator } =
-        useGlobalContext();
-
-    const formatStatsAmount = (
-        value: number,
-        denom: Denomination = Denomination.Sat,
-    ) =>
-        formatAmountDenomination(new BigNumber(value), denom, separator(), BTC);
-
-    onMount(async () => {
-        try {
-            const statsRes = await getNodeStats();
-
-            log.debug("node stats", statsRes);
-            const stats = statsRes.BTC.total;
-
-            setNumChannel(stats.channels);
-            setNumPeers(stats.peers);
-            setCapacity(stats.capacity);
-
-            const difference = Date.now() - stats.oldestChannel * 1000;
-            const years = (difference / 1000 / 60 / 60 / 24 / 365).toFixed(2);
-            setOldestChannel(years);
-        } catch (error) {
-            log.error("nodestats error", error);
-        }
-    });
+    const { hideHero, setHideHero, t } = useGlobalContext();
 
     return (
         <div id="hero" class="inner-wrap">
@@ -67,14 +19,12 @@ export const Hero = () => {
                 id="create-overlay"
                 class={hideHero() ? "" : "glow"}
                 onClick={() => setHideHero(true)}>
-                {config.isPro ? <FeeComparison /> : <Create />}
+                <Create />
             </div>
             <Show when={!hideHero()}>
                 <h1>
-                    {config.isPro ? t("headline_pro") : t("headline")}
-                    <small>
-                        {config.isPro ? t("subline_pro") : t("subline")}
-                    </small>
+                    {t("headline")}
+                    <small>{t("subline")}</small>
                 </h1>
                 <span class="btn btn-inline" onClick={() => navigate("swap")}>
                     {t("start_swapping")}
@@ -108,167 +58,7 @@ export const Hero = () => {
                                 alt="Liquid Bitcoin"
                                 class="padded"
                             />
-                            <img
-                                src={rbtc}
-                                alt="Rootstock Bitcoin"
-                                class="rbtc"
-                            />
-                            <div class="hero-icons-break" />
-                            <img src={tbtc} alt="tBTC" class="full-bleed" />
-                            <img src={wbtc} alt="WBTC" class="full-bleed" />
-                            <img src={usdt} alt="USDT" class="full-bleed" />
-                            <img src={usdc} alt="USDC" class="full-bleed" />
                         </div>
-                    </div>
-                </div>
-                <h2 class="headline">{t("node")}</h2>
-                <div id="numbers">
-                    <div class="number">
-                        {formatStatsAmount(numChannel())}{" "}
-                        <small>{t("num_channels")}</small>
-                    </div>
-                    <div class="number">
-                        {formatStatsAmount(numPeers())}{" "}
-                        <small>{t("peers")}</small>
-                    </div>
-                    <div class="number">
-                        {formatStatsAmount(capacity(), denomination())}{" "}
-                        <small>
-                            {t("capacity", {
-                                denomination: formatDenomination(
-                                    denomination(),
-                                    BTC,
-                                ),
-                            })}
-                        </small>
-                    </div>
-                    <div class="number">
-                        {t("oldest_channel_years", { years: oldestChannel() })}
-                        <small>{t("oldest_channel")}</small>
-                    </div>
-                </div>
-                <h2 class="headline">{t("integrations")}</h2>
-                <div id="integrations">
-                    <div>
-                        <ExternalLink
-                            href="https://getalby.com/"
-                            class="alby"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink href="https://aqua.net/" class="aqua" />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://bancolibre.com/"
-                            class="bancoLibre"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://blockstream.com/app/"
-                            class="blockstreamApp">
-                            Blockstream
-                            <br />
-                            <span>App</span>
-                        </ExternalLink>
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://breez.technology/"
-                            class="breez"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://www.bullbitcoin.com/"
-                            class="bull-bitcoin"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://www.cakepay.com/"
-                            class="cakepay"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://www.fedi.xyz/"
-                            class="fedi"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink href="https://fuji.money/" class="fuji" />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://geyser.fund/"
-                            class="geyser"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://helm-wallet.com/"
-                            class="helm"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://lnbits.com/"
-                            class="lnbits"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://www.ridethelightning.info/"
-                            class="rtl"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://www.tryspeed.com/"
-                            class="speed"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://stashpay.me"
-                            class="stashPay"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://thunderhub.io/"
-                            class="thunderhub">
-                            Thunderhub
-                        </ExternalLink>
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://tropykus.com"
-                            class="tropykus"
-                        />
-                    </div>
-                </div>
-                <h2 class="special headline">{t("partners")}</h2>
-                <div id="partners">
-                    <div>
-                        <ExternalLink
-                            href="https://arklabs.xyz"
-                            class="arklabs"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://blockstream.com/"
-                            class="blockstream"
-                        />
-                    </div>
-                    <div>
-                        <ExternalLink
-                            href="https://rootstocklabs.com/"
-                            class="rootstocklabs"
-                        />
                     </div>
                 </div>
             </Show>

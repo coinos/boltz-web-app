@@ -143,11 +143,11 @@ nav a.active {
         var(--color-primary-lighter) 10%,
         var(--color-primary) 90%
     );
-    mask: url("../assets/boltz.svg") no-repeat center;
+    mask: url("../assets/coinos.svg") no-repeat center;
     mask-size: contain;
 
     /* For Safari */
-    -webkit-mask: url("../assets/boltz.svg") no-repeat center;
+    -webkit-mask: url("../assets/coinos.svg") no-repeat center;
     -webkit-mask-size: contain;
 }
 #logo-mask[boltz-theme="pro"] {

@@ -11,12 +11,11 @@ const mainnetPreset = buildMainnetConfig({
 
 const config = {
     ...baseConfig,
-    torUrl: "http://boltzzzbnus4m7mta3cxmflnps4fp7dueu2tgurstbvrbt6xswzcocyd.onion/",
     network: "mainnet",
     loglevel: "debug",
     apiUrl: {
-        normal: "https://api.boltz.exchange",
-        tor: "http://boltzzzbnus4m7mta3cxmflnps4fp7dueu2tgurstbvrbt6xswzcocyd.onion/api",
+        normal: "https://swap.coinos.io",
+        tor: "https://swap.coinos.io",
     },
     cctpApiUrl: mainnetPreset.cctpApiUrl,
     solburnUrl: mainnetPreset.solburnUrl,
