@@ -36,7 +36,7 @@ const config = {
             "Swap between different Bitcoin layers while staying in full control. Fast and non-custodial Bitcoin / Lightning / Liquid swaps.",
         boltzColor100: "#FFFFFF",
         boltzColor200: "#FFFFFF",
-        backgroundColor: "#142840",
+        backgroundColor: "#000000",
         assetsPath: "",
         ldJson: {
             "@context": "https://schema.org",
