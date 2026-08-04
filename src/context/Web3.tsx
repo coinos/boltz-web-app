@@ -179,29 +179,36 @@ const Web3SignerProvider = (props: {
 
     const [providers, setProviders] = createSignal<
         Record<string, EIP6963ProviderDetail>
-    >({
-        [HardwareRdns.Ledger]: {
-            provider: new LedgerSigner(t),
-            info: {
-                name: "Ledger",
-                uuid: "ledger",
-                icon: LedgerIcon,
-                isHardware: true,
-                rdns: HardwareRdns.Ledger,
-                disabled: navigator.hid === undefined,
-            },
-        },
-        [HardwareRdns.Trezor]: {
-            provider: new TrezorSigner(),
-            info: {
-                name: "Trezor",
-                uuid: "trezor",
-                icon: TrezorIcon,
-                isHardware: true,
-                rdns: HardwareRdns.Trezor,
-            },
-        },
-    });
+    >(
+        // Ledger/Trezor here are EVM hardware signers; their constructors need
+        // an EVM asset config. On a BTC/L-BTC/LN-only deployment there are none,
+        // so only register them when EVM assets exist (else they throw at load).
+        hasEvm
+            ? {
+                  [HardwareRdns.Ledger]: {
+                      provider: new LedgerSigner(t),
+                      info: {
+                          name: "Ledger",
+                          uuid: "ledger",
+                          icon: LedgerIcon,
+                          isHardware: true,
+                          rdns: HardwareRdns.Ledger,
+                          disabled: navigator.hid === undefined,
+                      },
+                  },
+                  [HardwareRdns.Trezor]: {
+                      provider: new TrezorSigner(),
+                      info: {
+                          name: "Trezor",
+                          uuid: "trezor",
+                          icon: TrezorIcon,
+                          isHardware: true,
+                          rdns: HardwareRdns.Trezor,
+                      },
+                  },
+              }
+            : {},
+    );
     const [connectedWallet, setConnectedWallet] = createSignal<
         ConnectedWallet | undefined
     >(undefined);

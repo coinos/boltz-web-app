@@ -9,6 +9,16 @@ const mainnetPreset = buildMainnetConfig({
     btcMempoolApiUrl: import.meta.env.VITE_MEMPOOL_API_URL || undefined,
 });
 
+// coinos runs a BTC / L-BTC / Lightning-only backend — no EVM/stablecoin
+// pairs are served, so restrict the asset picker to what actually works.
+// LN is injected by the selector regardless (it's BTC's Lightning transport).
+const enabledAssets = new Set(["BTC", "L-BTC"]);
+const assets = Object.fromEntries(
+    Object.entries(mainnetPreset.assets ?? {}).filter(([symbol]) =>
+        enabledAssets.has(symbol),
+    ),
+);
+
 const config = {
     ...baseConfig,
     network: "mainnet",
@@ -19,7 +29,7 @@ const config = {
     },
     cctpApiUrl: mainnetPreset.cctpApiUrl,
     solburnUrl: mainnetPreset.solburnUrl,
-    assets: mainnetPreset.assets,
+    assets,
 } as Config;
 
 export { config, chooseUrl };
